@@ -1,1 +1,294 @@
-/* Add styles here */
+/* General Body Styles */
+body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    color: #5b5b5b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Container for Centering Content */
+.container {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Authentication Box */
+.auth-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    color: #d17a86;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #888;
+    margin-bottom: 30px;
+}
+
+/* Input Fields */
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    transition: box-shadow 0.3s;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(238, 156, 167, 0.5);
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #ee9ca7;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #d17a86;
+    transform: translateY(-2px);
+}
+
+#signup-button {
+    background: #f8b0b9;
+}
+#signup-button:hover {
+    background: #e38a95;
+}
+
+/* Error Messages */
+.error-message {
+    color: #d9534f;
+    margin-bottom: 15px;
+    min-height: 20px;
+    font-weight: 500;
+}
+
+/* Timeline Page */
+#timeline-container header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logout-button {
+    width: auto;
+    padding: 8px 15px;
+    background: #f8b0b9;
+    font-size: 0.9rem;
+}
+
+#timeline-feed {
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Memory Card */
+.memory-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideIn 0.5s forwards;
+}
+
+.memory-card .date {
+    font-weight: 700;
+    color: #d17a86;
+    margin-bottom: 10px;
+}
+
+.memory-card .story {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.memory-card .emoji {
+    font-size: 1.5rem;
+    float: right;
+}
+
+/* Add Memory Button */
+.add-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    line-height: 55px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 400px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    position: relative;
+    animation: zoomIn 0.4s;
+}
+
+.modal-title {
+    font-family: 'Dancing Script', cursive;
+    color: #d17a86;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: #aaa;
+    cursor: pointer;
+}
+
+/* Floating Hearts Animation */
+.hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 192, 203, 0.5);
+    transform: rotate(-45deg);
+    animation: float 15s infinite;
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 192, 203, 0.5);
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -10px;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: 10px;
+}
+
+.heart:nth-child(1) { left: 10%; animation-duration: 13s; animation-delay: 0s; }
+.heart:nth-child(2) { left: 20%; animation-duration: 17s; animation-delay: 2s; }
+.heart:nth-child(3) { left: 50%; animation-duration: 12s; animation-delay: 5s; }
+.heart:nth-child(4) { left: 70%; animation-duration: 18s; animation-delay: 1s; }
+.heart:nth-child(5) { left: 90%; animation-duration: 14s; animation-delay: 3s; }
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(-45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .auth-box, .modal-content {
+        padding: 25px;
+    }
+    .title {
+        font-size: 2.8rem;
+    }
+    .add-button {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+        font-size: 2.2rem;
+    }
+}
