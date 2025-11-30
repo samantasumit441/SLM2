@@ -34,10 +34,12 @@ const deleteModal = document.getElementById('delete-modal');
 const confirmDeleteButton = document.getElementById('confirm-delete-button');
 const cancelDeleteButton = document.getElementById('cancel-delete-button');
 
-// Stat modal
-const statModal = document.getElementById('stat-modal');
+// Stat page
+const statPage = document.getElementById('stat-page');
 const statButton = document.getElementById('stat-button');
 const liveClock = document.getElementById('live-clock');
+const backToTimelineButton = document.getElementById('back-to-timeline-button');
+const relationshipStartDateInput = document.getElementById('relationship-start-date');
 
 let memoryToDeleteId = null;
 let clockInterval;
@@ -184,61 +186,67 @@ window.addEventListener('click', (event) => {
     if (event.target === deleteModal) {
         deleteModal.style.display = 'none';
     }
-    if (event.target === statModal) {
-        statModal.style.display = 'none';
-        clearInterval(clockInterval);
-    }
 });
 
-// --- STAT MODAL ---
+// --- STATS PAGE ---
 
-const calculateTime = () => {
-    const startDate = new Date('2023-01-01T00:00:00');
+const updateClock = (startDate) => {
+    if (!startDate) {
+        liveClock.innerHTML = '<div class="clock-text">Please select a start date.</div>';
+        return;
+    }
+
     const now = new Date();
+    const diff = now - startDate;
 
-    let years = now.getFullYear() - startDate.getFullYear();
-    let months = now.getMonth() - startDate.getMonth();
-    let days = now.getDate() - startDate.getDate();
-    let hours = now.getHours() - startDate.getHours();
-    let minutes = now.getMinutes() - startDate.getMinutes();
-    let seconds = now.getSeconds() - startDate.getSeconds();
-
-    if (seconds < 0) {
-        minutes--;
-        seconds += 60;
-    }
-    if (minutes < 0) {
-        hours--;
-        minutes += 60;
-    }
-    if (hours < 0) {
-        days--;
-        hours += 24;
-    }
-    if (days < 0) {
-        months--;
-        const daysInLastMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-        days += daysInLastMonth;
-    }
-    if (months < 0) {
-        years--;
-        months += 12;
-    }
-
+    const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+    const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * (365.25 / 12)));
+    const days = Math.floor((diff % (1000 * 60 * 60 * 24 * (365.25 / 12))) / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
     liveClock.innerHTML = `
-        ${years} years, ${months} months, ${days} days<br>
-        ${hours} hours, ${minutes} minutes, ${seconds} seconds
+        <div class="heart-shape"></div>
+        <div class="clock-text">
+            ${years}y ${months}m ${days}d<br>
+            ${hours}h ${minutes}m ${seconds}s
+        </div>
     `;
 };
 
-statButton.addEventListener('click', () => {
-    statModal.style.display = 'flex';
-    calculateTime();
-    clockInterval = setInterval(calculateTime, 1000);
+const startClock = () => {
+    const savedDate = localStorage.getItem('relationshipStartDate');
+    if (savedDate) {
+        relationshipStartDateInput.value = savedDate;
+    }
+
+    const startDate = savedDate ? new Date(savedDate) : null;
+    
+    updateClock(startDate);
+    if (clockInterval) clearInterval(clockInterval);
+    if (startDate) {
+        clockInterval = setInterval(() => updateClock(startDate), 1000);
+    }
+};
+
+relationshipStartDateInput.addEventListener('change', () => {
+    const selectedDate = relationshipStartDateInput.value;
+    if (selectedDate) {
+        localStorage.setItem('relationshipStartDate', selectedDate);
+        startClock();
+    }
 });
 
-statModal.querySelector('.close-button').addEventListener('click', () => {
-    statModal.style.display = 'none';
+statButton.addEventListener('click', () => {
+    timelineContainer.style.display = 'none';
+    statPage.style.display = 'block';
+    startClock();
+});
+
+backToTimelineButton.addEventListener('click', () => {
+    statPage.style.display = 'none';
+    timelineContainer.style.display = 'block';
     clearInterval(clockInterval);
 });
 

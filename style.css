@@ -360,12 +360,110 @@ button:hover {
     display: block;
 }
 
-/* Stat Modal Styles */
-.live-clock {
-    font-size: 1.5rem;
+/* Stat Page Styles */
+#stat-page .stat-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     text-align: center;
-    padding: 20px;
-    color: #5b5b5b;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: 2px solid white;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.back-button:hover {
+    background: white;
+    color: #d17a86;
+}
+
+.date-picker-container {
+    margin: 20px 0;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.date-picker-container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#relationship-start-date {
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.live-clock {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin-top: 30px;
+}
+
+.heart-shape {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    animation: heartbeat 1.5s infinite;
+}
+
+.heart-shape::before,
+.heart-shape::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 104px;
+    height: 160px;
+    border-radius: 50px 50px 0 0;
+    background: #ff7a7a;
+}
+
+.heart-shape::before {
+    left: 100px;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.heart-shape::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+.clock-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
 /* Responsive Design */
