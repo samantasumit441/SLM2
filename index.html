@@ -38,6 +38,12 @@
     <div id="timeline-container" class="container" style="display: none;">
         <header>
             <h1 class="title">Our Timeline</h1>
+            <div class="dropdown">
+                <button class="dropdown-button">...</button>
+                <div class="dropdown-content">
+                    <a href="#" id="stat-button">Stat</a>
+                </div>
+            </div>
             <button id="logout-button" class="logout-button">Logout</button>
         </header>
         
@@ -46,19 +52,41 @@
         <button id="add-memory-button" class="add-button">+</button>
     </div>
 
-    <!-- Add Memory Modal -->
+    <!-- Add/Edit Memory Modal -->
     <div id="memory-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h2 class="modal-title">Add a New Memory</h2>
+            <h2 id="modal-title" class="modal-title">Add a New Memory</h2>
             
+            <input type="hidden" id="memory-id">
             <input type="date" id="memory-date" required>
             <input type="text" id="memory-emoji" placeholder="Add an emoji (e.g., ❤️)">
             <textarea id="memory-story" placeholder="Share your beautiful memory..." rows="4" required></textarea>
-            
+            <input type="file" id="memory-image" accept="image/*">
+            <img id="image-preview" src="#" alt="Image preview" style="display: none; max-width: 100%; margin-top: 10px;"/>
+
             <div id="modal-error" class="error-message"></div>
 
             <button id="save-memory-button">Save Memory</button>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2 class="modal-title">Are you sure?</h2>
+            <p>Do you really want to delete this memory? This action cannot be undone.</p>
+            <button id="confirm-delete-button">Yes, Delete</button>
+            <button id="cancel-delete-button" class="close-button">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Stat Modal -->
+    <div id="stat-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Our Journey</h2>
+            <div id="live-clock" class="live-clock"></div>
         </div>
     </div>
 
