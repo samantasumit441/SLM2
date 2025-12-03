@@ -54,6 +54,9 @@ const scratchCardImage = document.getElementById('scratch-card-image');
 const saveScratchCardButton = document.getElementById('save-scratch-card-button');
 const scratchModalError = document.getElementById('scratch-modal-error');
 const scratchCardDisplay = document.getElementById('scratch-card-display');
+const scratchCardRevealModal = document.getElementById('scratch-card-reveal-modal');
+const closeScratchRevealModalButton = document.querySelector('.close-scratch-reveal-modal-button');
+const scratchCardRevealArea = document.getElementById('scratch-card-reveal-area');
 
 
 let memoryToDeleteId = null;
@@ -215,6 +218,16 @@ window.addEventListener('click', (event) => {
     if (event.target === deleteModal) {
         deleteModal.style.display = 'none';
     }
+    if (event.target === createScratchCardModal) {
+        createScratchCardModal.style.display = 'none';
+    }
+    if (event.target === scratchCardRevealModal) {
+        scratchCardRevealModal.style.display = 'none';
+    }
+});
+
+closeScratchRevealModalButton.addEventListener('click', () => {
+    scratchCardRevealModal.style.display = 'none';
 });
 
 // --- STATS PAGE ---
@@ -380,10 +393,29 @@ const renderScratchCards = (cards) => {
 
         cardWrapper.innerHTML = `
             <div class="scratch-content">${content}</div>
-            <canvas class="scratch-canvas"></canvas>
+            <div class="scratch-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #d17a86; cursor: pointer; border-radius: 15px;"></div>
         `;
         scratchCardDisplay.appendChild(cardWrapper);
-        initScratchCanvas(cardWrapper.querySelector('.scratch-canvas'));
+
+        cardWrapper.addEventListener('click', () => {
+            scratchCardRevealArea.innerHTML = ''; // Clear previous card
+            const revealWrapper = document.createElement('div');
+            revealWrapper.className = 'scratch-card-wrapper';
+            revealWrapper.innerHTML = `
+                <div class="scratch-content">${content}</div>
+                <canvas class="scratch-canvas"></canvas>
+            `;
+            scratchCardRevealArea.appendChild(revealWrapper);
+            
+            const canvas = revealWrapper.querySelector('.scratch-canvas');
+            scratchCardRevealModal.style.display = 'flex';
+            
+            // We need to initialize the canvas after the modal is visible and has dimensions.
+            // Using a short timeout to ensure the DOM is updated.
+            setTimeout(() => {
+                initScratchCanvas(canvas);
+            }, 100);
+        });
     });
 };
 
