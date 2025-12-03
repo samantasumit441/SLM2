@@ -530,6 +530,20 @@ button:hover {
     object-fit: cover;
 }
 
+.scratch-reveal-content .scratch-content-image {
+    object-fit: contain;
+}
+
+.scratch-reveal-content .scratch-content {
+    align-items: center; /* Ensure vertical centering */
+}
+
+.scratch-reveal-content .scratch-content-text {
+    max-height: 90%;
+    overflow-y: auto;
+    padding: 20px; /* Ensure padding is consistent */
+}
+
 .scratch-canvas {
     position: absolute;
     top: 0;
