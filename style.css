@@ -127,18 +127,39 @@ button:hover {
 
 /* Memory Card */
 .memory-card {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    animation: slideIn 0.5s ease-out forwards;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.6s ease-out forwards;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
 }
 
 .memory-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 0 20px #ffdde1, 0 0 40px #ee9ca7, 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.memory-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px) brightness(0.9);
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.memory-content {
+    position: relative;
+    padding: 25px;
+    z-index: 2;
 }
 
 .memory-card .date {
@@ -151,10 +172,12 @@ button:hover {
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 15px;
+    color: #444;
 }
 
 .memory-card .actions {
     text-align: right;
+    margin-top: 15px;
 }
 
 .memory-card .actions button {
@@ -164,20 +187,15 @@ button:hover {
     font-size: 0.9rem;
     cursor: pointer;
     margin-left: 10px;
+    transition: color 0.3s;
 }
 
 .memory-card .actions button:hover {
     color: #d17a86;
 }
 
-.memory-card img {
-    max-width: 100%;
-    border-radius: 10px;
-    margin-top: 15px;
-}
-
 .memory-card .emoji {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     float: right;
 }
 
@@ -262,7 +280,7 @@ button:hover {
     position: absolute;
     width: 20px;
     height: 20px;
-    background: rgba(255, 192, 203, 0.5);
+    background: rgba(255, 255, 255, 0.6);
     border-radius: 50%;
 }
 
@@ -276,11 +294,13 @@ button:hover {
     left: 10px;
 }
 
-.heart:nth-child(1) { left: 10%; animation-duration: 13s; animation-delay: 0s; }
-.heart:nth-child(2) { left: 20%; animation-duration: 17s; animation-delay: 2s; }
-.heart:nth-child(3) { left: 50%; animation-duration: 12s; animation-delay: 5s; }
-.heart:nth-child(4) { left: 70%; animation-duration: 18s; animation-delay: 1s; }
-.heart:nth-child(5) { left: 90%; animation-duration: 14s; animation-delay: 3s; }
+.heart:nth-child(1) { left: 10%; animation-duration: 13s; animation-delay: 0s; transform: scale(1.2); }
+.heart:nth-child(2) { left: 20%; animation-duration: 17s; animation-delay: 2s; transform: scale(0.8); }
+.heart:nth-child(3) { left: 50%; animation-duration: 12s; animation-delay: 5s; transform: scale(1.5); }
+.heart:nth-child(4) { left: 70%; animation-duration: 18s; animation-delay: 1s; transform: scale(1); }
+.heart:nth-child(5) { left: 90%; animation-duration: 14s; animation-delay: 3s; transform: scale(0.9); }
+.heart:nth-child(6) { left: 35%; animation-duration: 15s; animation-delay: 7s; transform: scale(1.1); }
+.heart:nth-child(7) { left: 80%; animation-duration: 16s; animation-delay: 4s; transform: scale(0.7); }
 
 /* Keyframe Animations */
 @keyframes fadeIn {
@@ -372,109 +392,92 @@ button:hover {
 }
 
 /* Stat Page Styles */
+#stat-page {
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    color: white;
+}
+
 #stat-page .stat-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
     text-align: center;
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    padding: 20px;
 }
 
 .back-button {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    background: none;
-    border: 2px solid white;
+    top: 30px;
+    left: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
     color: white;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     cursor: pointer;
     transition: all 0.3s;
+    backdrop-filter: blur(5px);
 }
 
 .back-button:hover {
-    background: white;
-    color: #d17a86;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
 }
 
 .date-picker-container {
-    margin: 20px 0;
-    color: white;
-    font-size: 1.2rem;
+    margin: 30px 0;
+    font-size: 1.3rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .date-picker-container label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 #relationship-start-date {
     border: 2px solid white;
     background: transparent;
     color: white;
-    padding: 8px;
-    border-radius: 8px;
+    padding: 10px;
+    border-radius: 10px;
     font-family: 'Quicksand', sans-serif;
+    font-size: 1.1rem;
 }
 
 .live-clock {
     position: relative;
-    width: 200px;
-    height: 200px;
-    margin-top: 30px;
-}
-
-.heart-shape {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    animation: heartbeat 1.5s infinite;
-}
-
-.heart-shape::before,
-.heart-shape::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 104px;
-    height: 160px;
-    border-radius: 50px 50px 0 0;
-    background: #ff7a7a;
-}
-
-.heart-shape::before {
-    left: 100px;
-    transform: rotate(-45deg);
-    transform-origin: 0 100%;
-}
-
-.heart-shape::after {
-    left: 0;
-    transform: rotate(45deg);
-    transform-origin: 100% 100%;
+    width: 250px;
+    height: 250px;
+    margin-top: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 30px rgba(255,255,255,0.3);
+    animation: pulse 2.5s infinite;
 }
 
 .clock-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     font-weight: bold;
     text-align: center;
     z-index: 10;
+    text-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-@keyframes heartbeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+@keyframes pulse {
+    0% { box-shadow: 0 0 30px rgba(255,255,255,0.3); }
+    50% { box-shadow: 0 0 50px rgba(255,255,255,0.6); }
+    100% { box-shadow: 0 0 30px rgba(255,255,255,0.3); }
 }
 
 /* Responsive Design */
