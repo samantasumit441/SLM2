@@ -348,6 +348,7 @@ saveMemoryButton.addEventListener('click', async () => {
     if (error) {
         modalError.textContent = `Error: ${error.message}`;
     } else {
+        resetMemoryModal();
         memoryModal.style.display = 'none';
         fetchMemories();
     }
@@ -389,6 +390,7 @@ cancelDeleteButton.addEventListener('click', () => {
 // Listen for changes
 _supabase.channel('memories')
     .on('postgres_changes', { event: '*', schema: 'public', table: 'memories' }, payload => {
+        console.log('Change received!', payload);
         fetchMemories();
     })
     .subscribe();
