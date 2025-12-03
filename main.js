@@ -41,6 +41,21 @@ const liveClock = document.getElementById('live-clock');
 const backToTimelineButton = document.getElementById('back-to-timeline-button');
 const relationshipStartDateInput = document.getElementById('relationship-start-date');
 
+// Scratch Card elements
+const scratchCardContainer = document.getElementById('scratch-card-container');
+const scratchCardButton = document.getElementById('scratch-card-button');
+const createScratchCardButton = document.getElementById('create-scratch-card-button');
+const backToTimelineFromScratchButton = document.getElementById('back-to-timeline-from-scratch-button');
+const createScratchCardModal = document.getElementById('create-scratch-card-modal');
+const closeScratchModalButton = document.querySelector('.close-scratch-modal-button');
+const scratchCardType = document.getElementById('scratch-card-type');
+const scratchCardText = document.getElementById('scratch-card-text');
+const scratchCardImage = document.getElementById('scratch-card-image');
+const saveScratchCardButton = document.getElementById('save-scratch-card-button');
+const scratchModalError = document.getElementById('scratch-modal-error');
+const scratchCardDisplay = document.getElementById('scratch-card-display');
+
+
 let memoryToDeleteId = null;
 let clockInterval;
 
@@ -263,6 +278,146 @@ backToTimelineButton.addEventListener('click', () => {
     timelineContainer.style.display = 'block';
     clearInterval(clockInterval);
 });
+
+// --- SCRATCH CARD ---
+
+// Show/Hide Scratch Card Page
+scratchCardButton.addEventListener('click', () => {
+    timelineContainer.style.display = 'none';
+    scratchCardContainer.style.display = 'block';
+    fetchScratchCards();
+});
+
+backToTimelineFromScratchButton.addEventListener('click', () => {
+    scratchCardContainer.style.display = 'none';
+    timelineContainer.style.display = 'block';
+});
+
+// Modal Handling
+createScratchCardButton.addEventListener('click', () => {
+    createScratchCardModal.style.display = 'flex';
+});
+
+closeScratchModalButton.addEventListener('click', () => {
+    createScratchCardModal.style.display = 'none';
+});
+
+scratchCardType.addEventListener('change', () => {
+    if (scratchCardType.value === 'text') {
+        scratchCardText.style.display = 'block';
+        scratchCardImage.style.display = 'none';
+    } else {
+        scratchCardText.style.display = 'none';
+        scratchCardImage.style.display = 'block';
+    }
+});
+
+// Save Scratch Card
+saveScratchCardButton.addEventListener('click', async () => {
+    const { data: { user } } = await _supabase.auth.getUser();
+    if (!user) {
+        scratchModalError.textContent = 'You must be logged in.';
+        return;
+    }
+
+    const type = scratchCardType.value;
+    let textContent = null;
+    let imageUrl = null;
+
+    if (type === 'text') {
+        if (!scratchCardText.value) {
+            scratchModalError.textContent = 'Please enter a message.';
+            return;
+        }
+        textContent = scratchCardText.value;
+    } else {
+        const imageFile = scratchCardImage.files[0];
+        if (!imageFile) {
+            scratchModalError.textContent = 'Please select an image.';
+            return;
+        }
+        const filePath = `public/scratch-cards/${user.id}/${Date.now()}-${imageFile.name}`;
+        const { error: uploadError } = await _supabase.storage.from('memory-images').upload(filePath, imageFile);
+        if (uploadError) {
+            scratchModalError.textContent = `Image upload failed: ${uploadError.message}`;
+            return;
+        }
+        const { data: { publicUrl } } = _supabase.storage.from('memory-images').getPublicUrl(filePath);
+        imageUrl = publicUrl;
+    }
+
+    const { error } = await _supabase.from('scratch_cards').insert([
+        { user_id: user.id, card_type: type, content_text: textContent, content_image_url: imageUrl }
+    ]);
+
+    if (error) {
+        scratchModalError.textContent = `Error: ${error.message}`;
+    } else {
+        createScratchCardModal.style.display = 'none';
+        fetchScratchCards();
+    }
+});
+
+// Fetch and Render Scratch Cards
+const fetchScratchCards = async () => {
+    const { data: cards, error } = await _supabase.from('scratch_cards').select('*').order('created_at', { ascending: false });
+    if (error) {
+        console.error('Error fetching scratch cards:', error);
+    } else {
+        renderScratchCards(cards);
+    }
+};
+
+const renderScratchCards = (cards) => {
+    scratchCardDisplay.innerHTML = '';
+    cards.forEach(card => {
+        const cardWrapper = document.createElement('div');
+        cardWrapper.className = 'scratch-card-wrapper';
+
+        const content = card.card_type === 'text'
+            ? `<div class="scratch-content-text">${card.content_text}</div>`
+            : `<img src="${card.content_image_url}" class="scratch-content-image">`;
+
+        cardWrapper.innerHTML = `
+            <div class="scratch-content">${content}</div>
+            <canvas class="scratch-canvas"></canvas>
+        `;
+        scratchCardDisplay.appendChild(cardWrapper);
+        initScratchCanvas(cardWrapper.querySelector('.scratch-canvas'));
+    });
+};
+
+const initScratchCanvas = (canvas) => {
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    // Fill with scratchable surface
+    ctx.fillStyle = '#d17a86';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    let isDrawing = false;
+
+    const scratch = (e) => {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX || e.touches[0].clientX - rect.left;
+        const y = e.clientY || e.touches[0].clientY - rect.top;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 20, 0, Math.PI * 2);
+        ctx.fill();
+    };
+
+    canvas.addEventListener('mousedown', () => isDrawing = true);
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mousemove', scratch);
+
+    canvas.addEventListener('touchstart', () => isDrawing = true);
+    canvas.addEventListener('touchend', () => isDrawing = false);
+    canvas.addEventListener('touchmove', scratch);
+};
 
 // Open modal in edit mode
 const openEditModal = (memory) => {
