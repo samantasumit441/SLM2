@@ -549,6 +549,20 @@ button:hover {
     font-size: 1rem;
 }
 
+.scratch-reveal-content {
+    width: 90vw;
+    height: 90vw;
+    max-width: 500px;
+    max-height: 500px;
+    padding: 0;
+}
+
+#scratch-card-reveal-area {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
 #scratch-card-display {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
