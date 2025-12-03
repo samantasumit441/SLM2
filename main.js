@@ -96,6 +96,7 @@ const checkUser = async () => {
 
 // Fetch and display memories
 const fetchMemories = async () => {
+    console.log('Fetching memories...');
     const { data: memories, error } = await _supabase
         .from('memories')
         .select('*')
@@ -104,17 +105,26 @@ const fetchMemories = async () => {
     if (error) {
         console.error('Error fetching memories:', error);
     } else {
+        console.log('Memories fetched successfully:', memories);
         renderMemories(memories);
     }
 };
 
 // Render memories to the DOM
-const renderMemories = (memories) => {
+const renderMemories = async (memories) => {
+    console.log('Rendering memories:', memories);
     timelineFeed.innerHTML = ''; // Clear existing memories
-    const { data: { session } } = _supabase.auth.getSession();
+    if (!memories || memories.length === 0) {
+        console.log('No memories to render.');
+        timelineFeed.innerHTML = '<p>No memories yet. Add one!</p>';
+        return;
+    }
+
+    const { data: { session } } = await _supabase.auth.getSession();
     const user = session?.user;
 
     memories.forEach(memory => {
+        console.log('Rendering memory:', memory);
         const memoryCard = document.createElement('div');
         memoryCard.classList.add('memory-card');
         
