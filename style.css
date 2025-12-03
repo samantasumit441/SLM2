@@ -480,6 +480,75 @@ button:hover {
     100% { box-shadow: 0 0 30px rgba(255,255,255,0.3); }
 }
 
+/* Scratch Card Styles */
+#scratch-card-container header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#scratch-card-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+}
+
+.scratch-card-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.scratch-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+}
+
+.scratch-content-text {
+    font-size: 1.5rem;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+}
+
+.scratch-content-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.scratch-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+#create-scratch-card-modal select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+}
+
 /* Responsive Design */
 @media (min-width: 768px) {
     .container {
