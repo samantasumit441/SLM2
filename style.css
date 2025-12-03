@@ -131,14 +131,14 @@ button:hover {
     padding: 20px;
     border-radius: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     animation: slideIn 0.5s ease-out forwards;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .memory-card:hover {
     transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff, 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .memory-card .date {
@@ -475,6 +475,13 @@ button:hover {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .container {
+        max-width: 700px;
+    }
 }
 
 /* Responsive Design */
