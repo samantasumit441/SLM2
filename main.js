@@ -138,12 +138,16 @@ const renderMemories = async (memories) => {
             `;
         }
         
+        const memoryImageStyle = memory.image_url ? `style="background-image: url('${memory.image_url}')"` : '';
+        
         memoryCard.innerHTML = `
-            <div class="emoji">${memory.emoji || ''}</div>
-            <div class="date">${new Date(memory.memory_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
-            <div class="story">${memory.story}</div>
-            ${memory.image_url ? `<img src="${memory.image_url}" alt="Memory image">` : ''}
-            ${actions}
+            <div class="memory-background" ${memoryImageStyle}></div>
+            <div class="memory-content">
+                <div class="emoji">${memory.emoji || ''}</div>
+                <div class="date">${new Date(memory.memory_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                <div class="story">${memory.story}</div>
+                ${actions}
+            </div>
         `;
         timelineFeed.appendChild(memoryCard);
     });
