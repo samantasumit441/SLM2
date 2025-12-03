@@ -132,7 +132,7 @@ button:hover {
     border-radius: 15px;
     margin-bottom: 20px;
     box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 5px 15px rgba(0, 0, 0, 0.1);
-    animation: flip-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: slideIn 0.5s ease-out forwards;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -308,6 +308,17 @@ button:hover {
 @keyframes zoomIn {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 @keyframes float {
