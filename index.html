@@ -42,6 +42,7 @@
                 <button class="dropdown-button">...</button>
                 <div class="dropdown-content">
                     <a href="#" id="stat-button">Stat</a>
+                    <a href="#" id="scratch-card-button">Scratch Card</a>
                 </div>
             </div>
             <button id="logout-button" class="logout-button">Logout</button>
@@ -91,6 +92,34 @@
                 <input type="date" id="relationship-start-date">
             </div>
             <div id="live-clock" class="live-clock"></div>
+        </div>
+    </div>
+
+    <!-- Scratch Card Page -->
+    <div id="scratch-card-container" class="container" style="display: none;">
+        <header>
+            <button id="back-to-timeline-from-scratch-button" class="back-button">&larr;</button>
+            <h1 class="title">Scratch & Reveal</h1>
+            <button id="create-scratch-card-button" class="add-button">+</button>
+        </header>
+        <div id="scratch-card-display">
+            <!-- Scratch cards will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Create Scratch Card Modal -->
+    <div id="create-scratch-card-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-scratch-modal-button">&times;</span>
+            <h2 class="modal-title">Create a Scratch Card</h2>
+            <select id="scratch-card-type">
+                <option value="text">Text</option>
+                <option value="image">Image</option>
+            </select>
+            <textarea id="scratch-card-text" placeholder="Your secret message..." rows="4"></textarea>
+            <input type="file" id="scratch-card-image" accept="image/*" style="display: none;">
+            <div id="scratch-modal-error" class="error-message"></div>
+            <button id="save-scratch-card-button">Save</button>
         </div>
     </div>
 
