@@ -352,6 +352,17 @@ button:hover {
     }
 }
 
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Dropdown Styles */
 .dropdown {
     position: relative;
@@ -364,27 +375,42 @@ button:hover {
     color: #d17a86;
     font-size: 1.5rem;
     cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
     right: 0;
-    background-color: #f9f9f9;
-    min-width: 100px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    margin-top: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    min-width: 140px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
     z-index: 1;
+    border-radius: 15px;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    animation: fadeInDown 0.3s ease-in-out;
 }
 
 .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
+    color: #5b5b5b;
+    padding: 12px 20px;
     text-decoration: none;
     display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
 }
 
 .dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: #ee9ca7;
+    color: white;
 }
 
 .dropdown:hover .dropdown-content {
